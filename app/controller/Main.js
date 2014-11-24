@@ -1,0 +1,243 @@
+/**
+ * Created by jack on 14-11-18.
+ */
+Ext.define('MyApp.controller.Main', {
+    extend: 'Ext.app.Controller',
+
+
+
+    config: {
+        control: {
+            nav:{
+                initialize: 'initRender',
+                mapinit:'initMap'
+            },
+            
+            imgbtn: {
+                tap: 'doImgCLick'
+            },
+            contacts: {
+                itemtap: 'onContactSelect'
+            },
+            msgbtn: {
+                tap: 'doMsgCLick'
+            },
+            locationbtn:{
+
+                tap: 'doLocCLick' 
+            },
+            navigationview:{
+                push: 'onMainPush'
+            },
+            loadmorelistbtn:{
+                tap: 'doLoadmorelistCLick'
+            }
+
+        },
+        refs: {
+            contacts: 'contacts',
+            nav: 'main',
+            showContact: 'contact-show',
+            map:'main #map',
+            loadmorelistbtn:'contacts #loadmorelist',
+            imgbtn:'main #imagebtn',
+            msgbtn:'main #msgbtn',
+            navigationview:'main #navigationview',
+            locationbtn:'main #locationbtn',
+            imgpanel:'main #imagerc'
+        }
+    },
+    onContactSelect: function(list, index, node, record) {
+        if(!this.showContact)this.showContact = Ext.create('MyApp.view.contact.Show');
+        //console.log()
+        //alert(1);
+        //this.getContacts().deselectAll();
+        //console.log(this.showContact);
+        //testobj=this.showContact;
+        // Bind the record onto the show contact view
+        this.showContact.setRecord(record);
+        this.getNavigationview().push(this.showContact);
+
+        // Push the show contact view into the navigation view
+
+    },
+    doLoadmorelistCLick:function(){
+      //alert(111);
+      store=this.getContacts().getStore();
+        store.data.items.length
+
+      for(var i=0;i<10;i++){
+          //console.log(store.data.items[i].raw);
+          store.add(store.data.items[i].raw);
+      }
+    },
+    onMainPush: function(view, item) {
+        this.getContacts().deselectAll();
+        /*var editButton = this.getEditButton();
+
+        if (item.xtype == "contact-show") {
+            this.getContacts().deselectAll();
+
+            this.showEditButton();
+        } else {
+            this.hideEditButton();
+        }*/
+    },
+
+    initRender:function(){
+     // console.log(document.getElementById('map'));
+       //alert(1);
+        this.makeLonlat();
+       testobj=this;
+    },
+    initMap:function(obj){
+         //alert(1111);
+         //console.log(document.getElementById('map'));
+        var latlon=this.lonlat;
+
+        if(!latlon)latlon=[30,120];
+        if(!this.ismapinited){
+            var mapdiv=Ext.get('map');
+            var mappanel=this.getMap();
+            mapdiv.setHeight(mappanel.element.dom.offsetHeight);
+
+            this.map = L.map('map',{maxZoom:18}).setView(latlon, 12);
+
+            // add an OpenStreetMap tile layertestobjs=obj;
+            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(this.map);
+           this.ismapinited=true;
+        }
+        //console.log(latlon);
+
+         this.locationMove();
+          
+    },
+    locationMove:function(){
+        if(this.map){
+            var LeafIcon = L.Icon.extend({ iconSize: [30, 30]});
+            var locationIcon = new LeafIcon({iconUrl: "resources/icons/locationtail.png"});
+            var latlon  =this.lonlat;
+            if(!latlon)latlon=[30,120];
+            if(this.location_marker)this.map.removeLayer(this.location_marker);
+            this.location_marker=L.marker(latlon,{icon:locationIcon}).addTo(this.map);
+            this.map.setView(latlon,12);
+        }
+
+    },
+    makeLonlat:function(){
+        var me=this;
+        function onSuccess(position) {
+             me.lonlat=[position.coords.latitude,position.coords.longitude];
+            me.locationMove();
+        }
+
+// onError Callback receives a PositionError object
+//
+        function onError(error) {
+            /*alert('code: '    + error.code    + '\n' +
+                'message: ' + error.message + '\n');*/
+        }
+
+// Options: throw an error if no update is received every 30 seconds.
+//
+        var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
+    },
+    doLocCLick:function(){
+        var me=this;
+        var task = Ext.create('Ext.util.DelayedTask', function() {
+                Ext.Viewport.mask({ xtype: 'loadmask',
+                       message: "Checking Credentials.." });
+        }, this);
+        task.delay(100);
+            var onSuccess = function(position) {
+                me.lonlat=[position.coords.latitude,position.coords.longitude];
+                //alert(1);
+                Ext.Viewport.setMasked(false);
+                Ext.device.Notification.show({
+            title: 'One Button',
+            message: 'Latitude: '          + position.coords.latitude          + '\n' +
+                      'Longitude: '         + position.coords.longitude         + '\n' +
+                      'Altitude: '          + position.coords.altitude          + '\n' +
+                      'Accuracy: '          + position.coords.accuracy          + '\n' +
+                      'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+                      'Heading: '           + position.coords.heading           + '\n' +
+                      'Speed: '             + position.coords.speed             + '\n' +
+                      'Timestamp: '         + position.timestamp                + '\n'
+        });
+                
+            };
+
+            // onError Callback receives a PositionError object
+            //
+            function onError(error) {
+                Ext.Viewport.setMasked(false);
+                alert('code: '    + error.code    + '\n' +
+                      'message: ' + error.message + '\n');
+            }
+
+            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    },
+    doImgCLick:function(){
+        var me=this;
+        var actionSheet = Ext.create('Ext.ActionSheet', {
+            items: [
+                {
+                    text: '相机拍照',
+                    handler:function(){
+                        //alert(1);
+
+                        imagfunc('camera');
+                    }
+                    //ui  : 'decline'
+                },
+                {
+                    text: '图片库',
+                    handler:function(){
+                        //alert(2);
+                        imagfunc('library');
+                    }
+                },
+                {
+                    text: '取消',
+                    handler:function(){
+                        actionSheet.hide();
+                    },
+                    ui  : 'decline'
+                }
+            ]
+        });
+
+        Ext.Viewport.add(actionSheet);
+        actionSheet.show();
+
+        var imagfunc=function(type){
+            actionSheet.hide();
+            var imgpanel=me.getImgpanel();
+            //alert(1);
+            Ext.device.Camera.capture({
+                source: type,
+                destination: 'file',
+                //encoding:'png',
+                success: function(imgdata) {
+                    //show the newly captured image in a full screen Ext.Img component:
+                    //var a=Ext.getCmp('imagerc');
+                    //imgpanel.setSrc("data:image/png;base64,"+imgdata);
+                    imgpanel.setSrc(imgdata)
+
+                }
+            });
+        };
+
+           
+    },
+    doMsgCLick:function(){
+
+        Ext.device.Notification.show({
+            title: 'One Button',
+            message: 'This is a simple notification with one button.'
+        });
+        
+    }
+});
