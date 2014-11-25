@@ -1,0 +1,22 @@
+.home .x-button {
+    background-image:none;
+    background-color:transparent;
+    border:0;
+    padding:0.2em 0;
+}
+.home .x-button .x-button-label {
+    font-weight:normal;
+    color:#3F444A;
+    font-size:.7em;
+    margin-top:.25em;
+}
+.home .x-button .x-button-icon {
+    font-size:1.8em;
+    width: 64px;
+    height: 64px;
+}
+.leaflet-control-layers-toggle {
+    background-image: url(../icons/layers.png);
+    width: 36px;
+    height: 36px;
+}

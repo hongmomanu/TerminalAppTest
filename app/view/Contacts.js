@@ -3,7 +3,7 @@ Ext.define('MyApp.view.Contacts', {
     xtype: 'contacts',
 
     config: {
-        title: '列表测试',
+        title: '',
         cls: 'x-contacts',
         variableHeights: true,
         //refreshHeightOnUpdate :false,

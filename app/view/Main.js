@@ -17,32 +17,54 @@ Ext.define('MyApp.view.Main', {
                 styleHtmlContent: true,
                 scrollable: true,
 		     layout: 'vbox',
-                items: [{
-                    docked: 'top',
-                    xtype: 'titlebar',
-                    title: '欢迎使用'
-                },{
-                    xtype:'button',
-                    text:'消息测试',
-                    itemId:'msgbtn'
+              items:[
+                  {
+                      docked: 'top',
+                      xtype: 'titlebar',
+                      title: '欢迎使用'
+                  },
+                  {
+                      xtype : 'panel',
+                      margin : 5,
+                      cls:'home',
+                      //centered:true,
+                      layout:'hbox',
+                      items: [{
 
-                    
-                },{
-                    xtype:'button',
-                    text:'地理位置测试',
-                    itemId:'locationbtn'
-                    
-                },{
-                    xtype:'button',
-                    text:'picture测试',
-                    itemId:'imagebtn'
-                } ,{
-            xtype: 'image',
-            itemId:'imagerc',
-            flex:1,
-            src: 'resources/icons/snow.jpg'
-        }
-                ]/*,
+                          xtype:'button',
+                          text:'消息测试',
+                          flex:1,
+                          icon : "resources/icons/muru.png",
+                          iconAlign : 'top',
+                          itemId:'msgbtn'
+
+
+                      },{
+                          xtype:'button',
+                          flex:1,
+                          text:'地理位置测试',
+                          icon : "resources/icons/about.png",
+                          iconAlign : 'top',
+                          itemId:'locationbtn'
+
+                      },{
+                          xtype:'button',
+                          flex:1,
+                          text:'picture测试',
+                          icon : "resources/icons/shuijiao.png",
+                          iconAlign : 'top',
+                          itemId:'imagebtn'
+                      }
+                      ]
+                  } ,
+                  {
+                      xtype: 'image',
+                      itemId:'imagerc',
+                      flex:1,
+                      src: 'resources/icons/snow.jpg'
+                  }
+              ]
+                /*,
 
                 html: [
                     "You've just generated a new Sencha Touch 2 project. What you're looking at right now is the ",
@@ -91,14 +113,14 @@ Ext.define('MyApp.view.Main', {
                 ]
             },
             {
-                title: '开始',
+                title: '列表',
                 iconCls: 'action',
                 layout: 'fit',
                 items: [
                     {
                         docked: 'top',
                         xtype: 'titlebar',
-                        title: '观看教程'
+                        title: '列表'
                     },
                     /*{
                         xtype: 'video',

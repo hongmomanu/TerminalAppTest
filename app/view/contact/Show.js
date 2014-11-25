@@ -17,7 +17,9 @@ Ext.define('MyApp.view.contact.Show', {
                 tpl: [
                     '<div class="top">',
                         /*'<div class="headshot" style="background-image:url(resources/images/headshots/{headshot});"></div>',*/
-                        '<div class="name"><b style="color: green">{firstName}</b> {lastName}<span>{title}</span></div>',
+                        '<div class="name"><b style="color: green">{firstName}</b> {lastName}<span>{title}</span>' +
+                        '<br><img src="resources/icons/snow.jpg">' +
+                            '</div>',
                     '</div>'
                 ].join('')
             }

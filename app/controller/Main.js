@@ -104,10 +104,18 @@ Ext.define('MyApp.controller.Main', {
             this.map = L.map('map',{maxZoom:18}).setView(latlon, 12);
 
             // add an OpenStreetMap tile layertestobjs=obj;
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            var openstreet=L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(this.map);
-           this.ismapinited=true;
+            var satelite_tianditu=L.tileLayer('http://t0.tianditu.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
+                attribution: '&copy; <a href="http://www.tianditu.com/copyright">OpenStreetMap</a> contributors'
+            });
+            var baseLayers = {
+                "矢量": openstreet,
+                "影像": satelite_tianditu
+            };
+            L.control.layers(baseLayers).addTo(this.map);
+            this.ismapinited=true;
         }
         //console.log(latlon);
 

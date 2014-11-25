@@ -96,10 +96,15 @@
             "update": "delta"
         },*/
 
+
         {
             "path": "resources/css/leaflet.css",
             "update": "delta"
-        }    
+        },
+        {
+            "path": "resources/css/main.css",
+            "update": "delta"
+        }
 
         ],
 
