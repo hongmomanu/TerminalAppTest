@@ -8,10 +8,12 @@
     font-weight:normal;
     color:#3F444A;
     font-size:.7em;
+    border: 0;
     margin-top:.25em;
 }
 .home .x-button .x-button-icon {
     font-size:1.8em;
+    border: 0;
     width: 64px;
     height: 64px;
 }
