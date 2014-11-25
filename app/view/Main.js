@@ -40,7 +40,7 @@ Ext.define('MyApp.view.Main', {
             xtype: 'image',
             itemId:'imagerc',
             flex:1,
-            src: 'resources/icons/iTunesArtwork.png'
+            src: 'resources/icons/snow.jpg'
         }
                 ]/*,
 
