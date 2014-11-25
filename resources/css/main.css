@@ -15,8 +15,3 @@
     width: 64px;
     height: 64px;
 }
-.leaflet-control-layers-toggle {
-    background-image: url(../icons/layers.png);
-    width: 36px;
-    height: 36px;
-}

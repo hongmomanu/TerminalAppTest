@@ -157,24 +157,23 @@ Ext.define('MyApp.controller.Main', {
         var task = Ext.create('Ext.util.DelayedTask', function() {
                 Ext.Viewport.mask({ xtype: 'loadmask',
                        message: "Checking Credentials.." });
-        }, this);
-        task.delay(100);
+
             var onSuccess = function(position) {
                 me.lonlat=[position.coords.latitude,position.coords.longitude];
                 //alert(1);
                 Ext.Viewport.setMasked(false);
                 Ext.device.Notification.show({
-            title: 'One Button',
-            message: 'Latitude: '          + position.coords.latitude          + '\n' +
-                      'Longitude: '         + position.coords.longitude         + '\n' +
-                      'Altitude: '          + position.coords.altitude          + '\n' +
-                      'Accuracy: '          + position.coords.accuracy          + '\n' +
-                      'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-                      'Heading: '           + position.coords.heading           + '\n' +
-                      'Speed: '             + position.coords.speed             + '\n' +
-                      'Timestamp: '         + position.timestamp                + '\n'
-        });
-                
+                    title: 'One Button',
+                    message: 'Latitude: '          + position.coords.latitude          + '\n' +
+                        'Longitude: '         + position.coords.longitude         + '\n' +
+                        'Altitude: '          + position.coords.altitude          + '\n' +
+                        'Accuracy: '          + position.coords.accuracy          + '\n' +
+                        'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+                        'Heading: '           + position.coords.heading           + '\n' +
+                        'Speed: '             + position.coords.speed             + '\n' +
+                        'Timestamp: '         + position.timestamp                + '\n'
+                });
+
             };
 
             // onError Callback receives a PositionError object
@@ -182,10 +181,16 @@ Ext.define('MyApp.controller.Main', {
             function onError(error) {
                 Ext.Viewport.setMasked(false);
                 alert('code: '    + error.code    + '\n' +
-                      'message: ' + error.message + '\n');
+                    'message: ' + error.message + '\n');
             }
 
             navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+
+
+        }, this);
+        task.delay(1);
+
     },
     doImgCLick:function(){
         var me=this;

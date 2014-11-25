@@ -16,7 +16,7 @@ Ext.define('MyApp.view.Main', {
 
                 styleHtmlContent: true,
                 scrollable: true,
-		     layout: 'vbox',
+		     layout: 'fit',
               items:[
                   {
                       docked: 'top',
@@ -25,6 +25,8 @@ Ext.define('MyApp.view.Main', {
                   },
                   {
                       xtype : 'panel',
+                      //height:100,
+                      //flex:1,
                       margin : 5,
                       cls:'home',
                       //centered:true,
@@ -60,7 +62,7 @@ Ext.define('MyApp.view.Main', {
                   {
                       xtype: 'image',
                       itemId:'imagerc',
-                      flex:1,
+                      //flex:3,
                       src: 'resources/icons/snow.jpg'
                   }
               ]
