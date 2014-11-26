@@ -29,21 +29,24 @@ Ext.define('MyApp.view.Main', {
                       flex:1,
                       //margin : 5,
                       cls:'home',
+                      border:0,
                       //centered:true,
                       layout:'hbox',
-                      items: [{
-
+                      items: [
+                          {
                           xtype:'button',
                           text:'消息测试',
+                          border:0,
+                          height:100,
                           flex:1,
                           icon : "resources/icons/muru.png",
                           iconAlign : 'top',
                           itemId:'msgbtn'
-
-
                       },{
                           xtype:'button',
                           flex:1,
+                          border:0,
+                          height:100,
                           text:'地理位置测试',
                           icon : "resources/icons/about.png",
                           iconAlign : 'top',
@@ -52,8 +55,10 @@ Ext.define('MyApp.view.Main', {
                       },{
                           xtype:'button',
                           flex:1,
+                          border:0,
                           text:'picture测试',
                           icon : "resources/icons/shuijiao.png",
+                          height:100,
                           iconAlign : 'top',
                           itemId:'imagebtn'
                       }
