@@ -1,16 +1,13 @@
 Ext.define('MyApp.view.contact.Show', {
     extend: 'Ext.Container',
     xtype: 'contact-show',
-
     requires: [
         //'Ext.Map'
     ],
-
     config: {
         title: '详细信息',
         baseCls: 'x-show-contact',
         layout: 'vbox',
-
         items: [
             {
                 itemId: 'content',

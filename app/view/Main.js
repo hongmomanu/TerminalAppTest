@@ -149,7 +149,217 @@ Ext.define('MyApp.view.Main', {
 
 
                     }
+
                 ]
+            },
+            {
+                title: '表单',
+                iconCls: 'search',
+                layout: 'fit' ,
+                items: [
+                    {
+                        docked: 'top',
+                        xtype: 'titlebar',
+                        title: '表单浏览'
+                    },{
+                        xtype:'formpanel',
+                        items: [
+                            {
+                            xtype: 'fieldset',
+                            title: '个人信息',
+                            instructions: 'Please enter the information above.',
+                            defaults: {
+                                required: true
+                            },
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    name: 'name',
+                                    label: '姓名',
+                                    autoCapitalize: false
+                                },
+                                {
+                                    xtype: 'passwordfield',
+                                    name: 'password',
+                                    label: '密码'
+                                },
+                                {
+                                    xtype: 'textfield',
+                                    name: 'disabled',
+                                    label: '不准输入',
+                                    disabled: true
+                                },
+                                {
+                                    xtype: 'emailfield',
+                                    name: 'email',
+                                    label: '邮箱',
+                                    placeHolder: 'you@sina.com'
+                                }
+                            ]
+                            },
+                            {
+                                xtype: 'fieldset',
+                                title: 'Single Toggle',
+                                items: [
+                                    {
+                                        xtype: 'togglefield',
+                                        name: 'single_toggle',
+                                        value: 1
+                                    }
+                                ]
+                            },
+                            {
+                                xtype: 'fieldset',
+                                title: 'Single Select',
+                                items: [
+                                    {
+                                        xtype: 'selectfield',
+                                        name: 'options',
+                                        options: [
+                                            {text: 'This is just a big select with text that is overflowing', value: '1'},
+                                            {text: 'Another item', value: '2'}
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                xtype: 'fieldset',
+                                title: 'Favorite color',
+                                defaults: { xtype: 'radiofield' },
+                                items: [
+                                    { name: 'color', label: 'Red', value: 'red' },
+                                    { name: 'color', label: 'Green', checked: true, value: 'green'}
+                                ]
+                            },
+                            {
+                                xtype: 'toolbar',
+                                docked: 'bottom',
+                                scrollable: {
+                                    direction: 'horizontal',
+                                    directionLock: true
+                                },
+                                items: [
+                                    // Lets add a load button which will load the formpanel with a User model
+                                   /* {
+                                        text: 'Load Model',
+                                        ui: 'round',
+                                        scope: this,
+                                        handler: function() {
+
+                                            var form = this.form;
+
+                                            // Check if we have already created a user model yet. if we haven't, then lets create one.
+                                            if (!form.user) {
+                                                // Create a date for the datepicker field
+                                                var date = new Date();
+                                                date.setMonth(4);
+                                                date.setYear(1989);
+                                                date.setDate(1);
+
+                                                // Create a new instance of the User model with a bunch of fake values.
+                                                form.user = Ext.create('User', {
+                                                    name:     'Akura',
+                                                    password: 'secret',
+                                                    email:    'saru@sencha.com',
+                                                    disabled: 'disabled',
+                                                    url:      'http://sencha.com',
+                                                    bio:      'Learned the hard way!',
+                                                    number:   20,
+                                                    height:   20,
+                                                    spinner:  5,
+                                                    enable:   1,
+                                                    cool:     true,
+                                                    date:     date,
+                                                    team:     'redteam',
+                                                    color:    'blue',
+                                                    rank:     'padawan',
+                                                    secret:    true,
+                                                    single_slider:   10,
+                                                    multiple_slider: [20, 40]
+                                                });
+                                            }
+
+                                            // Set the record of the form to the User record instance.
+                                            form.setRecord(form.user);
+                                        }
+                                    },
+
+                                    {
+                                        text: 'Load Form',
+                                        ui: 'round',
+                                        scope: this,
+                                        handler : function() {
+                                            var form = this.form;
+
+                                            form.load({
+                                                url: 'user.json',
+                                                waitMsg: 'Loading User...'
+                                            });
+                                        }
+                                    },
+*/
+                                    { xtype: 'spacer' },
+
+                                    // Here we add a reset button which will reset all fields within the form panel back to their original value
+                                    {
+                                        text: 'Reset',
+
+                                        // Ensure the scope is 'this' so we have access to the global 'form' instance
+                                        //scope: this,
+                                        handler: function() {
+                                            // Call the form.reset method
+                                            var form=this.up('formpanel');
+                                            form.reset();
+                                        }
+                                    },
+
+                                    // Finally we add a Save button which will mask the formpanel, and update the current record in the formpanel with
+                                    // the latest values from the formpanel.
+                                    {
+                                        text: 'Save',
+                                        ui: 'confirm',
+                                        //scope: this,
+                                        handler: function() {
+                                            var form=this.up('formpanel');
+                                            //form.reset();
+
+                                            // Mask the form
+                                            form.setMasked({
+                                                xtype: 'loadmask',
+                                                message: 'Saving...'
+                                            });
+
+                                            // Put it inside a timeout so it feels like it is going to a server.
+                                            setTimeout(function() {
+                                                if (form.user) {
+                                                    // Call the updateRecord method of formpanel with the user record instance. This will update the user record
+                                                    // with the latest values.
+                                                    form.updateRecord(form.user, true);
+                                                }
+
+                                                // Unmask the formpanel
+                                                form.setMasked(false);
+                                            }, 1000);
+                                        }
+                                    },
+
+                                    {
+                                        text: 'Submit',
+                                        ui: 'confirm',
+                                        //scope: this,
+                                        handler: function() {
+                                            var form=this.up('formpanel');
+                                            form.submit({
+                                                url: 'user.json',
+                                                waitMsg: 'Saving User...'
+                                            });
+                                        }
+                                    }
+                                ]
+                            }
+                    ]
+                    }
+            ]
             }
         ]
     }

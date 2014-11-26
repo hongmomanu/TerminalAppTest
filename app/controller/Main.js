@@ -1,11 +1,9 @@
 /**
  * Created by jack on 14-11-18.
+ * main Controller used by Terminal app
  */
 Ext.define('MyApp.controller.Main', {
     extend: 'Ext.app.Controller',
-
-
-
     config: {
         control: {
             nav:{
@@ -23,8 +21,7 @@ Ext.define('MyApp.controller.Main', {
                 tap: 'doMsgCLick'
             },
             locationbtn:{
-
-                tap: 'doLocCLick' 
+                tap: 'doLocCLick'
             },
             navigationview:{
                 push: 'onMainPush'
@@ -124,13 +121,25 @@ Ext.define('MyApp.controller.Main', {
     },
     locationMove:function(){
         if(this.map){
-            var LeafIcon = L.Icon.extend({ iconSize: [30, 30]});
-            var locationIcon = new LeafIcon({iconUrl: "resources/icons/locationtail.png"});
+            /*var LeafIcon = L.Icon.extend({ iconSize: [30, 30]});
+            var locationIcon = new LeafIcon({iconUrl: "resources/icons/locationtail.png"});*/
+
+            var locationIcon = L.icon({
+                iconUrl: 'resources/icons/locationtail.png',
+                //shadowUrl: 'leaf-shadow.png',
+
+                iconSize:     [34, 63], // size of the icon
+                //shadowSize:   [50, 64], // size of the shadow
+                iconAnchor:   [16, 49] // point of the icon which will correspond to marker's location
+               // shadowAnchor: [4, 62],  // the same for the shadow
+                //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+            });
+
             var latlon  =this.lonlat;
-            if(!latlon)latlon=[30,120];
+            if(!latlon)latlon=[30.121,120.121];
             if(this.location_marker)this.map.removeLayer(this.location_marker);
             this.location_marker=L.marker(latlon,{icon:locationIcon}).addTo(this.map);
-            this.map.setView(latlon,12);
+            this.map.setView(latlon,13);
         }
 
     },
