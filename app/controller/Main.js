@@ -6,11 +6,11 @@ Ext.define('MyApp.controller.Main', {
     extend: 'Ext.app.Controller',
     config: {
         control: {
-            nav:{
+            nav: {
                 initialize: 'initRender',
-                mapinit:'initMap'
+                mapinit: 'initMap'
             },
-            
+
             imgbtn: {
                 tap: 'doImgCLick'
             },
@@ -20,13 +20,13 @@ Ext.define('MyApp.controller.Main', {
             msgbtn: {
                 tap: 'doMsgCLick'
             },
-            locationbtn:{
+            locationbtn: {
                 tap: 'doLocCLick'
             },
-            navigationview:{
+            navigationview: {
                 push: 'onMainPush'
             },
-            loadmorelistbtn:{
+            loadmorelistbtn: {
                 tap: 'doLoadmorelistCLick'
             }
 
@@ -35,17 +35,17 @@ Ext.define('MyApp.controller.Main', {
             contacts: 'contacts',
             nav: 'main',
             showContact: 'contact-show',
-            map:'main #map',
-            loadmorelistbtn:'contacts #loadmorelist',
-            imgbtn:'main #imagebtn',
-            msgbtn:'main #msgbtn',
-            navigationview:'main #navigationview',
-            locationbtn:'main #locationbtn',
-            imgpanel:'main #imagerc'
+            map: 'main #map',
+            loadmorelistbtn: 'contacts #loadmorelist',
+            imgbtn: 'main #imagebtn',
+            msgbtn: 'main #msgbtn',
+            navigationview: 'main #navigationview',
+            locationbtn: 'main #locationbtn',
+            imgpanel: 'main #imagerc'
         }
     },
-    onContactSelect: function(list, index, node, record) {
-        if(!this.showContact)this.showContact = Ext.create('MyApp.view.contact.Show');
+    onContactSelect: function (list, index, node, record) {
+        if (!this.showContact)this.showContact = Ext.create('MyApp.view.contact.Show');
         //console.log()
         //alert(1);
         //this.getContacts().deselectAll();
@@ -58,53 +58,53 @@ Ext.define('MyApp.controller.Main', {
         // Push the show contact view into the navigation view
 
     },
-    doLoadmorelistCLick:function(){
-      //alert(111);
-      store=this.getContacts().getStore();
+    doLoadmorelistCLick: function () {
+        //alert(111);
+        store = this.getContacts().getStore();
         store.data.items.length
 
-      for(var i=0;i<10;i++){
-          //console.log(store.data.items[i].raw);
-          store.add(store.data.items[i].raw);
-      }
+        for (var i = 0; i < 10; i++) {
+            //console.log(store.data.items[i].raw);
+            store.add(store.data.items[i].raw);
+        }
     },
-    onMainPush: function(view, item) {
+    onMainPush: function (view, item) {
         this.getContacts().deselectAll();
         /*var editButton = this.getEditButton();
 
-        if (item.xtype == "contact-show") {
-            this.getContacts().deselectAll();
+         if (item.xtype == "contact-show") {
+         this.getContacts().deselectAll();
 
-            this.showEditButton();
-        } else {
-            this.hideEditButton();
-        }*/
+         this.showEditButton();
+         } else {
+         this.hideEditButton();
+         }*/
     },
 
-    initRender:function(){
-     // console.log(document.getElementById('map'));
-       //alert(1);
+    initRender: function () {
+        // console.log(document.getElementById('map'));
+        //alert(1);
         this.makeLonlat();
-       testobj=this;
+        testobj = this;
     },
-    initMap:function(obj){
-         //alert(1111);
-         //console.log(document.getElementById('map'));
-        var latlon=this.lonlat;
+    initMap: function (obj) {
+        //alert(1111);
+        //console.log(document.getElementById('map'));
+        var latlon = this.lonlat;
 
-        if(!latlon)latlon=[30,120];
-        if(!this.ismapinited){
-            var mapdiv=Ext.get('map');
-            var mappanel=this.getMap();
+        if (!latlon)latlon = [30, 120];
+        if (!this.ismapinited) {
+            var mapdiv = Ext.get('map');
+            var mappanel = this.getMap();
             mapdiv.setHeight(mappanel.element.dom.offsetHeight);
 
-            this.map = L.map('map',{maxZoom:18}).setView(latlon, 12);
+            this.map = L.map('map', {maxZoom: 18}).setView(latlon, 12);
 
             // add an OpenStreetMap tile layertestobjs=obj;
-            var openstreet=L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            var openstreet = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(this.map);
-            var satelite_tianditu=L.tileLayer('http://t0.tianditu.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
+            var satelite_tianditu = L.tileLayer('http://t0.tianditu.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
                 attribution: '&copy; <a href="http://www.tianditu.com/copyright">OpenStreetMap</a> contributors'
             });
             var baseLayers = {
@@ -112,41 +112,42 @@ Ext.define('MyApp.controller.Main', {
                 "影像": satelite_tianditu
             };
             L.control.layers(baseLayers).addTo(this.map);
-            this.ismapinited=true;
+            this.ismapinited = true;
         }
         //console.log(latlon);
 
-         this.locationMove();
-          
+        this.locationMove();
+
     },
-    locationMove:function(){
-        if(this.map){
+    locationMove: function () {
+        if (this.map) {
             /*var LeafIcon = L.Icon.extend({ iconSize: [30, 30]});
-            var locationIcon = new LeafIcon({iconUrl: "resources/icons/locationtail.png"});*/
+             var locationIcon = new LeafIcon({iconUrl: "resources/icons/locationtail.png"});*/
 
             var locationIcon = L.icon({
                 iconUrl: 'resources/icons/locationtail.png',
                 //shadowUrl: 'leaf-shadow.png',
 
-                iconSize:     [34, 63], // size of the icon
+                iconSize: [34, 63], // size of the icon
                 //shadowSize:   [50, 64], // size of the shadow
-                iconAnchor:   [16, 49] // point of the icon which will correspond to marker's location
-               // shadowAnchor: [4, 62],  // the same for the shadow
+                iconAnchor: [16, 49] // point of the icon which will correspond to marker's location
+                // shadowAnchor: [4, 62],  // the same for the shadow
                 //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
             });
 
-            var latlon  =this.lonlat;
-            if(!latlon)latlon=[30.121,120.121];
-            if(this.location_marker)this.map.removeLayer(this.location_marker);
-            this.location_marker=L.marker(latlon,{icon:locationIcon}).addTo(this.map);
-            this.map.setView(latlon,13);
+            var latlon = this.lonlat;
+            if (!latlon)latlon = [30.121, 120.121];
+            if (this.location_marker)this.map.removeLayer(this.location_marker);
+            this.location_marker = L.marker(latlon, {icon: locationIcon}).addTo(this.map);
+            this.map.setView(latlon, 13);
         }
 
     },
-    makeLonlat:function(){
-        var me=this;
+    makeLonlat: function () {
+        var me = this;
+
         function onSuccess(position) {
-             me.lonlat=[position.coords.latitude,position.coords.longitude];
+            me.lonlat = [position.coords.latitude, position.coords.longitude];
             me.locationMove();
         }
 
@@ -154,33 +155,33 @@ Ext.define('MyApp.controller.Main', {
 //
         function onError(error) {
             /*alert('code: '    + error.code    + '\n' +
-                'message: ' + error.message + '\n');*/
+             'message: ' + error.message + '\n');*/
         }
 
 // Options: throw an error if no update is received every 30 seconds.
 //
         var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
     },
-    doLocCLick:function(){
-        var me=this;
-        var task = Ext.create('Ext.util.DelayedTask', function() {
-                Ext.Viewport.mask({ xtype: 'loadmask',
-                       message: "Checking Credentials.." });
+    doLocCLick: function () {
+        var me = this;
+        var task = Ext.create('Ext.util.DelayedTask', function () {
+            Ext.Viewport.mask({ xtype: 'loadmask',
+                message: "Checking Credentials.." });
 
-            var onSuccess = function(position) {
-                me.lonlat=[position.coords.latitude,position.coords.longitude];
+            var onSuccess = function (position) {
+                me.lonlat = [position.coords.latitude, position.coords.longitude];
                 //alert(1);
                 Ext.Viewport.setMasked(false);
                 Ext.device.Notification.show({
                     title: 'One Button',
-                    message: 'Latitude: '          + position.coords.latitude          + '\n' +
-                        'Longitude: '         + position.coords.longitude         + '\n' +
-                        'Altitude: '          + position.coords.altitude          + '\n' +
-                        'Accuracy: '          + position.coords.accuracy          + '\n' +
-                        'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-                        'Heading: '           + position.coords.heading           + '\n' +
-                        'Speed: '             + position.coords.speed             + '\n' +
-                        'Timestamp: '         + position.timestamp                + '\n'
+                    message: 'Latitude: ' + position.coords.latitude + '\n' +
+                        'Longitude: ' + position.coords.longitude + '\n' +
+                        'Altitude: ' + position.coords.altitude + '\n' +
+                        'Accuracy: ' + position.coords.accuracy + '\n' +
+                        'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
+                        'Heading: ' + position.coords.heading + '\n' +
+                        'Speed: ' + position.coords.speed + '\n' +
+                        'Timestamp: ' + position.timestamp + '\n'
                 });
 
             };
@@ -189,25 +190,24 @@ Ext.define('MyApp.controller.Main', {
             //
             function onError(error) {
                 Ext.Viewport.setMasked(false);
-                alert('code: '    + error.code    + '\n' +
+                alert('code: ' + error.code + '\n' +
                     'message: ' + error.message + '\n');
             }
 
             navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
 
-
         }, this);
         task.delay(1);
 
     },
-    doImgCLick:function(){
-        var me=this;
+    doImgCLick: function () {
+        var me = this;
         var actionSheet = Ext.create('Ext.ActionSheet', {
             items: [
                 {
                     text: '相机拍照',
-                    handler:function(){
+                    handler: function () {
                         //alert(1);
 
                         imagfunc('camera');
@@ -216,17 +216,17 @@ Ext.define('MyApp.controller.Main', {
                 },
                 {
                     text: '图片库',
-                    handler:function(){
+                    handler: function () {
                         //alert(2);
                         imagfunc('library');
                     }
                 },
                 {
                     text: '取消',
-                    handler:function(){
+                    handler: function () {
                         actionSheet.hide();
                     },
-                    ui  : 'decline'
+                    ui: 'decline'
                 }
             ]
         });
@@ -234,15 +234,15 @@ Ext.define('MyApp.controller.Main', {
         Ext.Viewport.add(actionSheet);
         actionSheet.show();
 
-        var imagfunc=function(type){
+        var imagfunc = function (type) {
             actionSheet.hide();
-            var imgpanel=me.getImgpanel();
+            var imgpanel = me.getImgpanel();
             //alert(1);
             Ext.device.Camera.capture({
                 source: type,
                 destination: 'file',
                 //encoding:'png',
-                success: function(imgdata) {
+                success: function (imgdata) {
                     //show the newly captured image in a full screen Ext.Img component:
                     //var a=Ext.getCmp('imagerc');
                     //imgpanel.setSrc("data:image/png;base64,"+imgdata);
@@ -252,14 +252,14 @@ Ext.define('MyApp.controller.Main', {
             });
         };
 
-           
+
     },
-    doMsgCLick:function(){
+    doMsgCLick: function () {
 
         Ext.device.Notification.show({
             title: 'One Button',
             message: 'This is a simple notification with one button.'
         });
-        
+
     }
 });
